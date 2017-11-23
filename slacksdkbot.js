@@ -36,7 +36,7 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message){
     message.type === 'member_joined_channel'
     ) {
         var msgStr = JSON.stringify(message);
-        self.postMessageToUser('lich0079', msgStr);
+        rtm.sendMessage(msgStr, rtm.dataStore.getDMByName('lich0079').id);
     }
 
 
