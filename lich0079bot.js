@@ -6,8 +6,6 @@ var lich0079Bot = function Constructor(settings) {
     this.settings = settings;
 };
 
-
-
 lich0079Bot.prototype.run = function () {
 
     var bot = new SlackBot(this.settings);

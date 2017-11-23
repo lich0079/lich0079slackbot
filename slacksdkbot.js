@@ -17,8 +17,9 @@ let testbotChannel;
 // The client will emit an RTM.AUTHENTICATED event on successful connection, with the `rtm.start` payload
 rtm.on(CLIENT_EVENTS.RTM.AUTHENTICATED, (rtmStartData) => {
   for (const c of rtmStartData.channels) {
+      console.log(c.name);
       if (c.is_member && c.name ==='general') { generalChannel = c.id }
-      if (c.is_member && c.name ==='testbot') { testbotChannel = c.id }
+      if (c.name ==='testbot') { testbotChannel = c.id }
   }
   console.log(`Logged in as ${rtmStartData.self.name} of team ${rtmStartData.team.name}, but not yet connected to a channel`);
 });
@@ -31,9 +32,9 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
 rtm.on(RTM_EVENTS.MESSAGE, function(message){
     var self = rtm;
 
-    if (message.type === 'channel_join' ||
-    message.type === 'channel_join' ||
-    message.type === 'member_joined_channel'
+    if (message.subtype === 'channel_join' ||
+    message.subtype === 'channel_join' ||
+    message.subtype === 'member_joined_channel'
     ) {
         var msgStr = JSON.stringify(message);
         rtm.sendMessage(msgStr, rtm.dataStore.getDMByName('lich0079').id);
@@ -51,10 +52,25 @@ rtm.on(RTM_EVENTS.MESSAGE, function(message){
 
     if (message.type === 'message') {
         var msgStr = JSON.stringify(message);
-        rtm.sendMessage(msgStr, generalChannel);
+        // rtm.sendMessage(msgStr, rtm.dataStore.getChannelByName('general').id);
         rtm.sendMessage(str, rtm.dataStore.getDMByName('lich0079').id);
     }
 
 });
 
 module.exports = rtm;
+
+
+
+// var WebClient = require('@slack/client').WebClient;
+
+// var token = process.env.BOT_API_KEY || '';
+// var web = new WebClient(token);
+
+// web.chat.postMessage('testbot', 'Hello there', function(err, res) {
+//     if (err) {
+//       console.log('Error:', err);
+//     } else {
+//       console.log('Message sent: ', res);
+//     }
+//   });
