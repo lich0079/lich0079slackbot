@@ -29,6 +29,18 @@ rtm.on(CLIENT_EVENTS.RTM.RTM_CONNECTION_OPENED, function () {
   rtm.sendMessage("power overwhelming", generalChannel);
 });
 
+rtm.on(CLIENT_EVENTS.RTM.DISCONNECT, function () {
+    console.log('CLIENT_EVENTS.RTM.DISCONNECT');
+});
+
+rtm.on(CLIENT_EVENTS.RTM.WS_CLOSE, function () {
+    console.log('CLIENT_EVENTS.RTM.WS_CLOSE');
+});
+
+rtm.on(CLIENT_EVENTS.RTM.WS_ERROR, function (error) {
+    console.log('CLIENT_EVENTS.RTM.WS_ERROR' + error);
+});
+
 rtm.on(RTM_EVENTS.MESSAGE, function(message){
     var self = rtm;
 
